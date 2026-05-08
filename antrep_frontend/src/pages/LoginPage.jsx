@@ -3,26 +3,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 const roles = [
-  {
-    id: 'STARTUP',
-    label: 'Startup',
-    img: '/images/startup_illustration_1778152541273.png'
-  },
-  {
-    id: 'INVESTOR',
-    label: 'Investor',
-    img: '/images/investor_illustration_1778152553839.png'
-  },
-  {
-    id: 'INCUBATOR',
-    label: 'Incubator',
-    img: '/images/incubator_illustration_1778152567807.png'
-  },
-  {
-    id: 'VC',
-    label: 'Venture Capital',
-    img: '/images/vc_illustration_1778152582616.png'
-  }
+  { id: 'STARTUP',           label: 'Startup',           img: '/images/startup_illustration_1778152541273.png' },
+  { id: 'INVESTOR',          label: 'Investor',           img: '/images/investor_illustration_1778152553839.png' },
+  { id: 'INCUBATOR',         label: 'Incubator',          img: '/images/incubator_illustration_1778152567807.png' },
+  { id: 'VC',                label: 'Venture Capital',    img: '/images/vc_illustration_1778152582616.png' },
+  // TODO: replace with proper company/banker illustration
+  { id: 'COMPANY',           label: 'Company',            img: '/images/startup_illustration_1778152541273.png' },
+  { id: 'INVESTMENT_BANKER', label: 'Investment Banker',  img: '/images/investor_illustration_1778152553839.png' },
 ]
 
 export default function LoginPage() {

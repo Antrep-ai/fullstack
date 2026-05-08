@@ -7,8 +7,9 @@ const roles = [
   { id: 'INVESTOR',          label: 'Investor',           img: '/images/investor_illustration_1778152553839.png' },
   { id: 'INCUBATOR',         label: 'Incubator',          img: '/images/incubator_illustration_1778152567807.png' },
   { id: 'VC',                label: 'Venture Capital',    img: '/images/vc_illustration_1778152582616.png' },
-  { id: 'COMPANY',           label: 'Company',            img: '/images/company_illustration.png' },
-  { id: 'INVESTMENT_BANKER', label: 'Investment Banker',  img: '/images/banker_illustration.png' },
+  // TODO: replace with proper company/banker illustration
+  { id: 'COMPANY',           label: 'Company',            img: '/images/startup_illustration_1778152541273.png' },
+  { id: 'INVESTMENT_BANKER', label: 'Investment Banker',  img: '/images/investor_illustration_1778152553839.png' },
 ]
 
 const COUNTRIES = ['India', 'USA', 'UK', 'Singapore', 'UAE', 'Other']
