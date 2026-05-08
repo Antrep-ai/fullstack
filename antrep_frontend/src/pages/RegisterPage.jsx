@@ -3,79 +3,163 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 const roles = [
-  { id: 'STARTUP', label: 'Startup', img: '/images/startup_illustration_1778152541273.png' },
-  { id: 'INVESTOR', label: 'Investor', img: '/images/investor_illustration_1778152553839.png' },
-  { id: 'INCUBATOR', label: 'Incubator', img: '/images/incubator_illustration_1778152567807.png' },
-  { id: 'VC', label: 'Venture Capital', img: '/images/vc_illustration_1778152582616.png' }
+  { id: 'STARTUP',           label: 'Startup',           img: '/images/startup_illustration_1778152541273.png' },
+  { id: 'INVESTOR',          label: 'Investor',           img: '/images/investor_illustration_1778152553839.png' },
+  { id: 'INCUBATOR',         label: 'Incubator',          img: '/images/incubator_illustration_1778152567807.png' },
+  { id: 'VC',                label: 'Venture Capital',    img: '/images/vc_illustration_1778152582616.png' },
+  { id: 'COMPANY',           label: 'Company',            img: '/images/company_illustration.png' },
+  { id: 'INVESTMENT_BANKER', label: 'Investment Banker',  img: '/images/banker_illustration.png' },
 ]
+
+const COUNTRIES = ['India', 'USA', 'UK', 'Singapore', 'UAE', 'Other']
 
 /* ---------- Role-specific field configs ---------- */
 const roleFields = {
   STARTUP: {
     title: 'Startup',
     fields: [
-      { name: 'startupName', placeholder: 'Name of Startup', type: 'text', required: true },
-      { name: 'founderName', placeholder: 'Founder Name', type: 'text', required: true },
-      { name: 'coFounderName', placeholder: 'Co-Founder Name', type: 'text' },
-      { name: 'mobile', placeholder: 'Mobile Number', type: 'tel', required: true },
-      { name: 'email', placeholder: 'Email Address', type: 'email', required: true },
-      { name: 'password', placeholder: 'Password (min 6 chars)', type: 'password', required: true },
-      { name: 'username', placeholder: 'Username', type: 'text', required: true },
-      { name: 'startupStage', placeholder: 'Startup Stage', type: 'select', required: true,
+      { name: 'email',            placeholder: 'Email Address',          type: 'email',    required: true },
+      { name: 'password',         placeholder: 'Password (min 6 chars)', type: 'password', required: true },
+      { name: 'username',         placeholder: 'Username',               type: 'text',     required: true },
+      { name: 'mobile',           placeholder: 'Mobile Number',          type: 'tel',      required: true },
+      { name: 'startupName',      placeholder: 'Name of Startup',        type: 'text',     required: true },
+      { name: 'founderName',      placeholder: 'Founder Name',           type: 'text',     required: true },
+      { name: 'cofounderName',    placeholder: 'Co-Founder Name',        type: 'text' },
+      { name: 'startupStage',     placeholder: 'Startup Stage',          type: 'select',
         options: ['Idea Stage', 'MVP Stage', 'Early Revenue', 'Growth Stage', 'Funded', 'Scaling'] },
-      { name: 'foundedDate', placeholder: 'Founded Date', type: 'date' },
-      { name: 'totalRevenue', placeholder: 'Total Revenue', type: 'text' },
-      { name: 'fundsRaised', placeholder: 'Funds Raised', type: 'text' },
-      { name: 'address', placeholder: 'Address', type: 'text' },
-      { name: 'country', placeholder: 'Choose a Country', type: 'select',
-        options: ['India', 'USA', 'UK', 'Singapore', 'UAE', 'Other'] }
-    ]
+      { name: 'foundedDate',      placeholder: 'Founded Date',           type: 'date' },
+      { name: 'totalRevenue',     placeholder: 'Total Revenue',          type: 'text' },
+      { name: 'fundsRaised',      placeholder: 'Funds Raised',           type: 'text' },
+      { name: 'address',          placeholder: 'Address',                type: 'text' },
+      { name: 'country',          placeholder: 'Choose a Country',       type: 'select',   options: COUNTRIES },
+      { name: 'website',          placeholder: 'Website URL',            type: 'text' },
+      { name: 'linkedinUrl',      placeholder: 'LinkedIn URL',           type: 'text' },
+      { name: 'pitchDeckUrl',     placeholder: 'Pitch Deck URL',         type: 'text' },
+      { name: 'targetMarket',     placeholder: 'Target Market',          type: 'text' },
+      { name: 'city',             placeholder: 'City',                   type: 'text' },
+      { name: 'teamSize',         placeholder: 'Team Size',              type: 'number' },
+    ],
   },
+
   INVESTOR: {
     title: 'Investor',
     fields: [
-      { name: 'email', placeholder: 'Email Address', type: 'email', required: true },
-      { name: 'password', placeholder: 'Password (min 6 chars)', type: 'password', required: true },
-      { name: 'mobile', placeholder: 'Mobile Number', type: 'tel', required: true },
-      { name: 'firstName', placeholder: 'First Name', type: 'text', required: true },
-      { name: 'lastName', placeholder: 'Last Name', type: 'text', required: true },
-      { name: 'username', placeholder: 'Username', type: 'text', required: true },
-      { name: 'numberOfInvestmentsRange', placeholder: 'Number of Investments', type: 'select',
+      { name: 'email',                    placeholder: 'Email Address',            type: 'email',    required: true },
+      { name: 'password',                 placeholder: 'Password (min 6 chars)',   type: 'password', required: true },
+      { name: 'username',                 placeholder: 'Username',                 type: 'text',     required: true },
+      { name: 'mobile',                   placeholder: 'Mobile Number',            type: 'tel',      required: true },
+      { name: 'firstName',                placeholder: 'First Name',               type: 'text',     required: true },
+      { name: 'lastName',                 placeholder: 'Last Name',                type: 'text',     required: true },
+      { name: 'numberOfInvestmentsRange', placeholder: 'Number of Investments',    type: 'select',
         options: ['1 to 5', '6 to 10', '11 to 50', '51 to 100', '100+'] },
-      { name: 'country', placeholder: 'Choose a Country', type: 'select',
-        options: ['India', 'USA', 'UK', 'Singapore', 'UAE', 'Other'] }
-    ]
+      { name: 'preferredSectors',         placeholder: 'Preferred Sectors',        type: 'text' },
+      { name: 'preferredStages',          placeholder: 'Preferred Stages',         type: 'text' },
+      { name: 'minTicketSizeInr',         placeholder: 'Min Ticket Size (INR)',    type: 'number' },
+      { name: 'maxTicketSizeInr',         placeholder: 'Max Ticket Size (INR)',    type: 'number' },
+      { name: 'investmentThesis',         placeholder: 'Investment Thesis',        type: 'text' },
+      { name: 'preferredGeographies',     placeholder: 'Preferred Geographies',    type: 'text' },
+      { name: 'portfolioCompanyNames',    placeholder: 'Portfolio Companies',      type: 'text' },
+      { name: 'linkedinUrl',              placeholder: 'LinkedIn URL',             type: 'text' },
+      { name: 'country',                  placeholder: 'Choose a Country',         type: 'select',   options: COUNTRIES },
+    ],
   },
+
   INCUBATOR: {
     title: 'Incubator',
     fields: [
-      { name: 'email', placeholder: 'Email Address', type: 'email', required: true },
-      { name: 'password', placeholder: 'Password (min 6 chars)', type: 'password', required: true },
-      { name: 'firstName', placeholder: 'First Name', type: 'text', required: true },
-      { name: 'lastName', placeholder: 'Last Name', type: 'text', required: true },
-      { name: 'mobile', placeholder: 'Mobile Number', type: 'tel' },
-      { name: 'username', placeholder: 'Username', type: 'text', required: true },
-      { name: 'placeOfIncubator', placeholder: 'Place / City of Incubator', type: 'text', required: true },
-      { name: 'startupsIncubatedCount', placeholder: 'Number of Startups Incubated', type: 'text' },
-      { name: 'country', placeholder: 'Choose a Country', type: 'select',
-        options: ['India', 'USA', 'UK', 'Singapore', 'UAE', 'Other'] }
-    ]
+      { name: 'email',                  placeholder: 'Email Address',              type: 'email',    required: true },
+      { name: 'password',               placeholder: 'Password (min 6 chars)',     type: 'password', required: true },
+      { name: 'username',               placeholder: 'Username',                   type: 'text',     required: true },
+      { name: 'firstName',              placeholder: 'First Name',                 type: 'text',     required: true },
+      { name: 'lastName',               placeholder: 'Last Name',                  type: 'text',     required: true },
+      { name: 'placeOfIncubator',       placeholder: 'Place / City of Incubator', type: 'text',     required: true },
+      { name: 'mobile',                 placeholder: 'Mobile Number',              type: 'tel' },
+      { name: 'incubatorName',          placeholder: 'Incubator Name',             type: 'text' },
+      { name: 'website',                placeholder: 'Website URL',                type: 'text' },
+      { name: 'focusSectors',           placeholder: 'Focus Sectors',              type: 'text' },
+      { name: 'startupsIncubatedCount', placeholder: 'Startups Incubated Count',   type: 'number' },
+      { name: 'linkedinUrl',            placeholder: 'LinkedIn URL',               type: 'text' },
+      { name: 'country',                placeholder: 'Choose a Country',           type: 'select',   options: COUNTRIES },
+    ],
   },
+
   VC: {
     title: 'Venture Capital',
     fields: [
-      { name: 'email', placeholder: 'Email Address', type: 'email', required: true },
-      { name: 'password', placeholder: 'Password (min 6 chars)', type: 'password', required: true },
-      { name: 'firstName', placeholder: 'First Name', type: 'text', required: true },
-      { name: 'lastName', placeholder: 'Last Name', type: 'text', required: true },
-      { name: 'mobile', placeholder: 'Mobile Number', type: 'tel' },
-      { name: 'username', placeholder: 'Username', type: 'text', required: true },
-      { name: 'numberOfInvestmentsRange', placeholder: 'Number of Investments', type: 'select',
+      { name: 'email',                    placeholder: 'Email Address',          type: 'email',    required: true },
+      { name: 'password',                 placeholder: 'Password (min 6 chars)', type: 'password', required: true },
+      { name: 'username',                 placeholder: 'Username',               type: 'text',     required: true },
+      { name: 'firstName',                placeholder: 'First Name',             type: 'text',     required: true },
+      { name: 'lastName',                 placeholder: 'Last Name',              type: 'text',     required: true },
+      { name: 'mobile',                   placeholder: 'Mobile Number',          type: 'tel' },
+      { name: 'firmName',                 placeholder: 'Firm Name',              type: 'text' },
+      { name: 'numberOfInvestmentsRange', placeholder: 'Number of Investments',  type: 'select',
         options: ['1 to 5', '6 to 10', '11 to 50', '51 to 100', '100+'] },
-      { name: 'country', placeholder: 'Country / HQ', type: 'select',
-        options: ['India', 'USA', 'UK', 'Singapore', 'UAE', 'Other'] }
-    ]
-  }
+      { name: 'aum',                      placeholder: 'AUM (e.g. ₹500 Cr)',     type: 'text' },
+      { name: 'preferredStages',          placeholder: 'Preferred Stages',       type: 'text' },
+      { name: 'sectorFocus',              placeholder: 'Sector Focus',           type: 'text' },
+      { name: 'investmentGeography',      placeholder: 'Investment Geography',   type: 'text' },
+      { name: 'linkedinUrl',              placeholder: 'LinkedIn URL',           type: 'text' },
+      { name: 'country',                  placeholder: 'Country / HQ',          type: 'select',   options: COUNTRIES },
+    ],
+  },
+
+  COMPANY: {
+    title: 'Company',
+    fields: [
+      { name: 'email',              placeholder: 'Email Address',          type: 'email',    required: true },
+      { name: 'password',           placeholder: 'Password (min 6 chars)', type: 'password', required: true },
+      { name: 'username',           placeholder: 'Username',               type: 'text',     required: true },
+      { name: 'mobile',             placeholder: 'Mobile Number',          type: 'tel',      required: true },
+      { name: 'companyName',        placeholder: 'Company Name',           type: 'text',     required: true },
+      { name: 'contactPersonName',  placeholder: 'Contact Person Name',    type: 'text',     required: true },
+      { name: 'designation',        placeholder: 'Designation',            type: 'text' },
+      { name: 'companyWebsite',     placeholder: 'Company Website URL',    type: 'text' },
+      { name: 'industrySector',     placeholder: 'Industry Sector',        type: 'select',
+        options: ['Technology', 'Healthcare', 'Financial Services', 'Consumer',
+                  'Manufacturing', 'Logistics', 'Renewable Energy', 'Education',
+                  'Real Estate', 'Other'] },
+      { name: 'foundedDate',        placeholder: 'Founded Date',           type: 'date' },
+      { name: 'annualRevenue',      placeholder: 'Annual Revenue',         type: 'text' },
+      { name: 'address',            placeholder: 'Address',                type: 'text' },
+      { name: 'country',            placeholder: 'Choose a Country',       type: 'select',   options: COUNTRIES },
+      { name: 'linkedinUrl',        placeholder: 'LinkedIn URL',           type: 'text' },
+      { name: 'employeeCount',      placeholder: 'Employee Count',         type: 'number' },
+      { name: 'companyDescription', placeholder: 'Company Description',    type: 'text' },
+    ],
+  },
+
+  INVESTMENT_BANKER: {
+    title: 'Investment Banker',
+    fields: [
+      { name: 'email',                    placeholder: 'Email Address',          type: 'email',    required: true },
+      { name: 'password',                 placeholder: 'Password (min 6 chars)', type: 'password', required: true },
+      { name: 'username',                 placeholder: 'Username',               type: 'text',     required: true },
+      { name: 'mobile',                   placeholder: 'Mobile Number',          type: 'tel',      required: true },
+      { name: 'firstName',                placeholder: 'First Name',             type: 'text',     required: true },
+      { name: 'lastName',                 placeholder: 'Last Name',              type: 'text',     required: true },
+      { name: 'firmName',                 placeholder: 'Firm Name',              type: 'text',     required: true },
+      { name: 'designation',              placeholder: 'Designation',            type: 'text',     required: true },
+      { name: 'yearsOfExperienceRange',   placeholder: 'Years of Experience',    type: 'select',
+        options: ['0 to 2 years', '3 to 5 years', '6 to 10 years', '10+ years'] },
+      { name: 'numberOfDealsClosedRange', placeholder: 'Number of Deals Closed', type: 'select',
+        options: ['0 to 5', '6 to 10', '11 to 25', '26 to 50', '50+'] },
+      { name: 'preferredDealType',        placeholder: 'Preferred Deal Type',    type: 'select',
+        options: ['Private Equity', 'M&A', 'Structured Credit', 'Venture Capital', 'All'] },
+      { name: 'sectorFocus',              placeholder: 'Sector Focus',           type: 'text' },
+      { name: 'linkedinUrl',              placeholder: 'LinkedIn URL',           type: 'text' },
+      { name: 'country',                  placeholder: 'Choose a Country',       type: 'select',   options: COUNTRIES },
+    ],
+  },
+}
+
+const roleMap = {
+  STARTUP:           'startup',
+  INVESTOR:          'investor',
+  INCUBATOR:         'incubator',
+  VC:                'venture_capitalist',
+  COMPANY:           'company',
+  INVESTMENT_BANKER: 'investment_banker',
 }
 
 function RenderField({ field, value, onChange }) {
@@ -117,14 +201,19 @@ export default function RegisterPage() {
     e.preventDefault()
     setError(null)
     setLoading(true)
-    const { email, password, ...meta } = formData
+
+    const { email, password, mobile, ...rest } = formData
+    const meta = { ...rest }
+    if (mobile) meta.mobileNumber = mobile
+
     const { error: err, data } = await signUp({
       email,
       password,
       options: {
-        data: { role: selectedRole, ...meta }
-      }
+        data: { role: roleMap[selectedRole], ...meta },
+      },
     })
+
     setLoading(false)
     if (err) {
       setError(err.message)
